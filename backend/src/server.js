@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
@@ -12,10 +14,10 @@ const io = socketio(server);
 
 const connectedUsers = {};
 
-mongoose.connect(
-	'mongodb+srv://test:test@test-jdytj.mongodb.net/test?retryWrites=true&w=majority',
-	{ useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose.connect(process.env.MONGO_URL, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+});
 
 io.on('connection', socket => {
 	console.log(socket.handshake.query);
